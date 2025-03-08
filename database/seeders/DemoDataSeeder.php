@@ -131,9 +131,9 @@ class DemoDataSeeder extends Seeder
         // Create Grades
         // Math grades for Student 1
         Grade::create([
-            'student_id' => $student1->id,
+            'student_id' => $student1->student_id,
             'subject_id' => $mathematics->id,
-            'teacher_id' => $mathTeacher->id,
+            'teacher_id' => $mathTeacher->employee_id,
             'marks' => 85,
             'grade_letter' => 'A',
             'academic_term' => 'Term 1',
@@ -143,9 +143,9 @@ class DemoDataSeeder extends Seeder
         ]);
 
         Grade::create([
-            'student_id' => $student1->id,
+            'student_id' => $student1->student_id,
             'subject_id' => $science->id,
-            'teacher_id' => $scienceTeacher->id,
+            'teacher_id' => $scienceTeacher->employee_id,
             'marks' => 78,
             'grade_letter' => 'B+',
             'academic_term' => 'Term 1',
@@ -156,9 +156,9 @@ class DemoDataSeeder extends Seeder
 
         // Grades for Student 2
         Grade::create([
-            'student_id' => $student2->id,
+            'student_id' => $student2->student_id,
             'subject_id' => $mathematics->id,
-            'teacher_id' => $mathTeacher->id,
+            'teacher_id' => $mathTeacher->employee_id,
             'marks' => 92,
             'grade_letter' => 'A+',
             'academic_term' => 'Term 1',
@@ -168,9 +168,9 @@ class DemoDataSeeder extends Seeder
         ]);
 
         Grade::create([
-            'student_id' => $student2->id,
+            'student_id' => $student2->student_id,
             'subject_id' => $science->id,
-            'teacher_id' => $scienceTeacher->id,
+            'teacher_id' => $scienceTeacher->employee_id,
             'marks' => 88,
             'grade_letter' => 'A',
             'academic_term' => 'Term 1',
