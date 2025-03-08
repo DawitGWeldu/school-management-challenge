@@ -62,9 +62,9 @@ class RoleAndPermissionSeeder extends Seeder
         }
 
         // Create roles
-        $admin = Role::create(['name' => 'admin']);
-        $teacher = Role::create(['name' => 'teacher']);
-        $student = Role::create(['name' => 'student']);
+        $admin = Role::create(['name' => 'Admin']);
+        $teacher = Role::create(['name' => 'Teacher']);
+        $student = Role::create(['name' => 'Student']);
 
         // Assign all permissions to admin
         $admin->givePermissionTo(Permission::all());
@@ -73,6 +73,8 @@ class RoleAndPermissionSeeder extends Seeder
         $teacher->givePermissionTo([
             'view_any_student',
             'view_student',
+            'view_teacher',
+            'view_any_teacher',
             'view_any_subject',
             'view_subject',
             'view_any_grade',
@@ -84,9 +86,11 @@ class RoleAndPermissionSeeder extends Seeder
 
         // Student permissions
         $student->givePermissionTo([
+            'view_student',
             'view_any_subject',
             'view_subject',
             'view_grade',
+            'view_any_grade'
         ]);
     }
 }

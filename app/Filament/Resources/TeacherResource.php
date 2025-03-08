@@ -43,9 +43,9 @@ class TeacherResource extends Resource
                             ->label('Email Address'),
                         Forms\Components\TextInput::make('password')
                             ->password()
-                            ->dehydrateStateUsing(fn ($state) => Hash::make($state))
-                            ->dehydrated(fn ($state) => filled($state))
-                            ->required(fn (string $context): bool => $context === 'create'),
+                            ->required(fn (string $context): bool => $context === 'create')
+                            ->minLength(8)
+                            ->label('Password'),
                     ])->columns(2),
 
                 Forms\Components\Section::make('Personal Information')

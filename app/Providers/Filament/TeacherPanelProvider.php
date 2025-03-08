@@ -24,7 +24,6 @@ class TeacherPanelProvider extends PanelProvider
         return $panel
             ->id('teacher')
             ->path('teacher')
-            ->login()
             ->colors([
                 'primary' => Color::Blue,
             ])
@@ -49,8 +48,12 @@ class TeacherPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                'role:Teacher',
             ])
-            ->authGuard('web')
-            ->login();
+            ->login()
+            ->passwordReset()
+            ->registration(false)
+            ->profile()
+            ->tenant(null);
     }
 } 
