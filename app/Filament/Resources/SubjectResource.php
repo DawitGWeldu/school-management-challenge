@@ -17,26 +17,61 @@ class SubjectResource extends Resource
 {
     protected static ?string $model = Subject::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
+
+    protected static ?string $navigationGroup = 'Academic Management';
+
+    protected static ?int $navigationSort = 3;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('code')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('grade_level')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('credits')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Section::make('Subject Details')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('code')
+                            ->required()
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(255),
+
+                        Forms\Components\Select::make('grade_level')
+                            ->required()
+                            ->options([
+                                'Grade 1' => 'Grade 1',
+                                'Grade 2' => 'Grade 2',
+                                'Grade 3' => 'Grade 3',
+                                'Grade 4' => 'Grade 4',
+                                'Grade 5' => 'Grade 5',
+                                'Grade 6' => 'Grade 6',
+                                'Grade 7' => 'Grade 7',
+                                'Grade 8' => 'Grade 8',
+                                'Grade 9' => 'Grade 9',
+                                'Grade 10' => 'Grade 10',
+                                'Grade 11' => 'Grade 11',
+                                'Grade 12' => 'Grade 12',
+                            ])
+                            ->searchable(),
+
+                        Forms\Components\TextInput::make('credits')
+                            ->required()
+                            ->numeric()
+                            ->minValue(0)
+                            ->maxValue(10)
+                            ->default(1),
+
+                        Forms\Components\Textarea::make('description')
+                            ->maxLength(65535)
+                            ->columnSpanFull(),
+                    ])->columns(2),
             ]);
     }
 
@@ -45,11 +80,14 @@ class SubjectResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('code')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('grade_level')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('credits')
                     ->numeric()
                     ->sortable(),
@@ -61,20 +99,35 @@ class SubjectResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('grade_level')
+                    ->options([
+                        'Grade 1' => 'Grade 1',
+                        'Grade 2' => 'Grade 2',
+                        'Grade 3' => 'Grade 3',
+                        'Grade 4' => 'Grade 4',
+                        'Grade 5' => 'Grade 5',
+                        'Grade 6' => 'Grade 6',
+                        'Grade 7' => 'Grade 7',
+                        'Grade 8' => 'Grade 8',
+                        'Grade 9' => 'Grade 9',
+                        'Grade 10' => 'Grade 10',
+                        'Grade 11' => 'Grade 11',
+                        'Grade 12' => 'Grade 12',
+                    ]),
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -82,7 +135,7 @@ class SubjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\GradesRelationManager::class,
         ];
     }
 
@@ -93,5 +146,13 @@ class SubjectResource extends Resource
             'create' => Pages\CreateSubject::route('/create'),
             'edit' => Pages\EditSubject::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }
