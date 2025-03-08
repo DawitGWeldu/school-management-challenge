@@ -78,6 +78,21 @@ return [
             'sslmode' => 'require',
         ],
 
+        'vercel-pgsql' => [
+            'driver' => 'pgsql',
+            'url' => env('POSTGRES_URL'),
+            'host' => env('POSTGRES_HOST'),
+            'port' => env('POSTGRES_PORT'),
+            'database' => env('POSTGRES_DATABASE'),
+            'username' => env('POSTGRES_USER'),
+            'password' => env('POSTGRES_PASSWORD'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'require',
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
