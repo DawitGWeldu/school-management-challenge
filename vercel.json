@@ -1,0 +1,54 @@
+{
+    "version": 2,
+    "framework": null,
+    "functions": {
+        "api/index.php": { 
+            "runtime": "vercel-php@0.7.2"
+        }
+    },
+    "routes": [
+        {
+            "src": "/build/(.*)",
+            "dest": "/public/build/$1"
+        },
+        {
+            "src": "/favicon.ico",
+            "dest": "/public/favicon.ico"
+        },
+        {
+            "src": "/robots.txt",
+            "dest": "/public/robots.txt"
+        },
+        {
+            "src": "/(css|js|images|fonts|vendor)/(.*)",
+            "dest": "/public/$1/$2"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
+    ],
+    "env": {
+        "APP_NAME": "School Management",
+        "APP_ENV": "production",
+        "APP_DEBUG": "true",
+        "APP_URL": "https://school-management-challenge.vercel.app",
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "APP_EVENTS_CACHE": "/tmp/events.php",
+        "APP_PACKAGES_CACHE": "/tmp/packages.php",
+        "APP_ROUTES_CACHE": "/tmp/routes.php",
+        "APP_SERVICES_CACHE": "/tmp/services.php",
+        "VIEW_COMPILED_PATH": "/tmp",
+        "CACHE_DRIVER": "array",
+        "LOG_CHANNEL": "stderr",
+        "SESSION_DRIVER": "cookie",
+        "DB_CONNECTION": "vercel-pgsql",
+        "POSTGRES_URL": "postgresql://db_owner:JjKz9n1XPfEv@ep-polished-star-a590y51g-pooler.us-east-2.aws.neon.tech/schoolmanagement?sslmode=require",
+        "POSTGRES_HOST": "ep-polished-star-a590y51g-pooler.us-east-2.aws.neon.tech",
+        "POSTGRES_PORT": "5432",
+        "POSTGRES_DATABASE": "schoolmanagement",
+        "POSTGRES_USER": "db_owner",
+        "POSTGRES_PASSWORD": "JjKz9n1XPfEv",
+        "ASSET_URL": "https://school-management-challenge.vercel.app"
+    }
+} 
