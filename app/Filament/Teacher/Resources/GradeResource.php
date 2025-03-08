@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Teacher\Resources;
 
-use App\Filament\Resources\GradeResource\Pages;
-use App\Filament\Resources\GradeResource\RelationManagers;
+use App\Filament\Teacher\Resources\GradeResource\Pages;
 use App\Models\Grade;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -19,9 +18,13 @@ class GradeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationGroup = 'Academic Management';
+    protected static ?string $navigationLabel = 'Student Grades';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?string $modelLabel = 'Grade';
+
+    protected static ?string $pluralModelLabel = 'Grades';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -42,13 +45,6 @@ class GradeResource extends Resource
                             ->preload()
                             ->searchable(['name', 'code'])
                             ->label('Subject'),
-
-                        Forms\Components\Select::make('teacher_id')
-                            ->relationship('teacher', 'first_name')
-                            ->required()
-                            ->preload()
-                            ->searchable(['first_name', 'last_name', 'employee_id'])
-                            ->label('Teacher'),
 
                         Forms\Components\TextInput::make('marks')
                             ->required()
@@ -98,10 +94,6 @@ class GradeResource extends Resource
                     ->label('Subject')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('teacher.full_name')
-                    ->label('Teacher')
-                    ->searchable(['first_name', 'last_name'])
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('marks')
                     ->numeric(2)
                     ->sortable(),
@@ -135,7 +127,6 @@ class GradeResource extends Resource
                     ->searchable()
                     ->preload()
                     ->label('Subject'),
-                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -145,17 +136,8 @@ class GradeResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
@@ -170,23 +152,9 @@ class GradeResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
+            ->where('teacher_id', auth()->user()->teacher->id)
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
     }
-
-    public static function getNavigationGroup(): ?string
-    {
-        return 'Academic Management';
-    }
-
-    public static function getNavigationIcon(): ?string
-    {
-        return 'heroicon-o-document-text';
-    }
-
-    public static function getNavigationSort(): ?int
-    {
-        return 3;
-    }
-}
+} 

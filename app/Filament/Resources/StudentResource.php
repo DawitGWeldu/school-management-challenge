@@ -19,11 +19,11 @@ class StudentResource extends Resource
 {
     protected static ?string $model = Student::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $navigationGroup = 'Student Management';
+    protected static ?string $navigationGroup = 'Academic Management';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 1;
 
     public static function getNavigationBadge(): ?string
     {
@@ -182,5 +182,20 @@ class StudentResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Academic Management';
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-academic-cap';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 1;
     }
 }
