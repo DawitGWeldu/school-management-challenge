@@ -15,6 +15,7 @@ class DemoDataSeeder extends Seeder
 {
     public function run(): void
     {
+        //temporarily disable the seeder
         // Create Super Admin User
         User::create([
             'name' => 'Super Admin',
