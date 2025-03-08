@@ -14,6 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Model;
 
 class StudentResource extends Resource
 {
@@ -39,7 +40,11 @@ class StudentResource extends Resource
                         Forms\Components\TextInput::make('email')
                             ->email()
                             ->required()
-                            ->unique(User::class, 'email', ignoreRecord: true)
+                            ->unique(
+                                table: 'users',
+                                column: 'email',
+                                ignorable: fn ($record) => $record?->user
+                            )
                             ->label('Email Address'),
                         Forms\Components\TextInput::make('password')
                             ->password()
@@ -52,7 +57,7 @@ class StudentResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('student_id')
                             ->required()
-                            ->unique(ignoreRecord: true)
+                            ->unique(table: 'students', column: 'student_id', ignorable: fn ($record) => $record)
                             ->label('Student ID'),
                         Forms\Components\TextInput::make('first_name')
                             ->required()
@@ -197,5 +202,10 @@ class StudentResource extends Resource
     public static function getNavigationSort(): ?int
     {
         return 1;
+    }
+
+    public static function getRecordRouteKeyName(): string
+    {
+        return 'student_id';
     }
 }

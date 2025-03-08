@@ -12,6 +12,10 @@ class Teacher extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $primaryKey = 'employee_id';
+
+    public $incrementing = false;
+
     protected $fillable = [
         'user_id',
         'employee_id',
@@ -36,7 +40,7 @@ class Teacher extends Model
 
     public function grades(): HasMany
     {
-        return $this->hasMany(Grade::class);
+        return $this->hasMany(Grade::class, 'teacher_id', 'employee_id');
     }
 
     public function getFullNameAttribute(): string

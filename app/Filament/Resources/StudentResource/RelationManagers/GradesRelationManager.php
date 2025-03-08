@@ -7,12 +7,25 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class GradesRelationManager extends RelationManager
 {
     protected static string $relationship = 'grades';
 
     protected static ?string $title = 'Grades';
+
+    protected static ?string $recordTitleAttribute = 'id';
+
+    public static function getModelLabel(): string
+    {
+        return 'Grade';
+    }
+
+    protected function getTableQuery(): Builder
+    {
+        return $this->ownerRecord->grades()->getQuery();
+    }
 
     public function form(Form $form): Form
     {

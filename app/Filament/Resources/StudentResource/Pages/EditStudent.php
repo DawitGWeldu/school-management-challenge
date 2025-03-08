@@ -28,21 +28,23 @@ class EditStudent extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        // Update user data
-        $user = $record->user;
-        $user->name = $data['first_name'] . ' ' . $data['last_name'];
-        $user->email = $data['email'];
-        
-        // Only update password if it's provided
-        if (isset($data['password']) && filled($data['password'])) {
-            $user->password = Hash::make($data['password']);
-        }
-        
-        $user->save();
+        // Update user data if email is provided
+        if (isset($data['email'])) {
+            $user = $record->user;
+            $user->name = $data['first_name'] . ' ' . $data['last_name'];
+            $user->email = $data['email'];
+            
+            // Only update password if it's provided
+            if (isset($data['password']) && filled($data['password'])) {
+                $user->password = Hash::make($data['password']);
+            }
+            
+            $user->save();
 
-        // Remove user-specific fields from student data
-        unset($data['email']);
-        unset($data['password']);
+            // Remove user-specific fields from student data
+            unset($data['email']);
+            unset($data['password']);
+        }
 
         // Update student data
         $record->update($data);

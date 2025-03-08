@@ -182,4 +182,9 @@ class TeacherResource extends Resource
     {
         return 1;
     }
+
+    public static function getRecordRouteKeyName(): string
+    {
+        return 'employee_id';
+    }
 }

@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->string('student_id');
+            $table->foreign('student_id')->references('student_id')->on('students')->onDelete('cascade');
             $table->foreignId('subject_id')->constrained()->onDelete('cascade');
-            $table->foreignId('teacher_id')->constrained()->onDelete('cascade');
+            $table->string('teacher_id');
+            $table->foreign('teacher_id')->references('employee_id')->on('teachers')->onDelete('cascade');
             $table->decimal('marks', 5, 2);
             $table->string('grade_letter')->nullable();
             $table->text('remarks')->nullable();

@@ -73,7 +73,6 @@ class StudentObserver
         if ($student->user) {
             $student->user->update([
                 'name' => $student->first_name . ' ' . $student->last_name,
-                'email' => request('email'),
             ]);
 
             if (request('password')) {
