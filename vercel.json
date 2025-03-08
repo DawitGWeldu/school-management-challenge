@@ -8,7 +8,19 @@
     },
     "routes": [
         {
-            "src": "/(css|js)/(.*)",
+            "src": "/build/(.*)",
+            "dest": "/public/build/$1"
+        },
+        {
+            "src": "/favicon.ico",
+            "dest": "/public/favicon.ico"
+        },
+        {
+            "src": "/robots.txt",
+            "dest": "/public/robots.txt"
+        },
+        {
+            "src": "/(css|js|images|fonts|vendor)/(.*)",
             "dest": "/public/$1/$2"
         },
         {
@@ -34,6 +46,8 @@
         "DB_HOST": "ep-polished-star-a590y51g-pooler.us-east-2.aws.neon.tech",
         "DB_PORT": "5432",
         "DB_DATABASE": "schoolmanagement",
-        "DB_USERNAME": "db_owner"
+        "DB_USERNAME": "db_owner",
+        "DB_PASSWORD": "endpoint=ep-polished-star-a590y51g$JjKz9n1XPfEv",
+        "ASSET_URL": "https://school-management-challenge.vercel.app"
     }
 } 
