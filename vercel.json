@@ -43,7 +43,11 @@
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
         "DB_CONNECTION": "mysql",
-        "MYSQL_ATTR_SSL_CA": "/etc/pki/tls/certs/ca-bundle.crt",
+        "DB_HOST": "shinkansen.proxy.rlwy.net",
+        "DB_PORT": "25085",
+        "DB_DATABASE": "railway",
+        "DB_USERNAME": "root",
+        "DB_PASSWORD": "zcslRaIJDMsagRzWchyMXsIOdsOZPjeY",
         "ASSET_URL": "https://school-management-challenge.vercel.app"
     }
 } 
