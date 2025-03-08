@@ -43,11 +43,7 @@
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
         "DB_CONNECTION": "pgsql",
-        "DB_HOST": "ep-polished-star-a590y51g-pooler.us-east-2.aws.neon.tech",
-        "DB_PORT": "5432",
-        "DB_DATABASE": "schoolmanagement",
-        "DB_USERNAME": "db_owner",
-        "DB_PASSWORD": "endpoint=ep-polished-star-a590y51g$JjKz9n1XPfEv",
+        "DATABASE_URL": "postgresql://db_owner:JjKz9n1XPfEv@ep-polished-star-a590y51g-pooler.us-east-2.aws.neon.tech/schoolmanagement?sslmode=require&options=endpoint%3Dep-polished-star-a590y51g",
         "ASSET_URL": "https://school-management-challenge.vercel.app"
     }
 } 
